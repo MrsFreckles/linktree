@@ -1,3 +1,5 @@
+const userId = "464424249877331969";
+
 const links = [
     {
         label: "Scenepacks",
@@ -42,10 +44,10 @@ links.forEach(link => {
 // --------------------------------------------
 async function fetchAndDisplayImage() {
     try {
-        const response = await fetch('https://decor.fieryflames.dev/api/users?ids=%5B%22464424249877331969%22%5D');
+        const response = await fetch('https://decor.fieryflames.dev/api/users?ids=%5B%22' + userId + '%22%5D');
         const data = await response.json();
 
-        const imageId = data["464424249877331969"];
+        const imageId = data[userId];
         const imageUrl = `https://ugc.decor.fieryflames.dev/${imageId}.png`;
 
         const img = document.createElement('img');
@@ -76,25 +78,35 @@ window.addEventListener('load', () => {
 });
 
 // YouTube-Videos einbetten
-const corsProxy = "https://cors-anywhere.herokuapp.com/";
 const channelId = "UCBYnkgk7jCY8RbN4EIEX76g";
-const rssUrl = `${corsProxy}https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+    const rssUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`)}`;
 
-fetch(rssUrl)
-    .then(response => response.text())
-    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-    .then(data => {
-        const firstEntry = data.querySelector("entry link");
-        if (firstEntry) {
-            const latestVideoUrl = firstEntry.getAttribute("href");
-            const videoId = new URL(latestVideoUrl).searchParams.get("v");
-            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            document.getElementById('video').innerHTML = `<iframe style="width: 100%; aspect-ratio: 16/9;" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-        } else {
-            console.error("Kein Video gefunden.");
-        }
+    fetch(rssUrl, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
     })
-    .catch(error => console.error("Fehler beim Abrufen des RSS-Feeds:", error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch RSS feed.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+            const firstEntry = xmlDoc.querySelector("entry link");
+            if (firstEntry) {
+                const latestVideoUrl = firstEntry.getAttribute("href");
+                const videoId = new URL(latestVideoUrl).searchParams.get("v");
+                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                document.getElementById('video').innerHTML = `<iframe style="width: 100%; aspect-ratio: 16/9;" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+            } else {
+                console.error("Kein Video gefunden.");
+            }
+        })
+        .catch(error => console.error("Fehler beim Abrufen des RSS-Feeds:", error));
 
 
 // --------------------------------------------
@@ -122,3 +134,42 @@ function setTheme(newTheme) {
     themeSwitch.setAttribute('aria-label', `Switch to ${newTheme === 'dark' ? 'light' : 'dark'} mode`);
     themeSwitch.addEventListener('click', toggleTheme);
 }
+
+// --------------------------------------------
+// USRBG Plugin API
+// --------------------------------------------
+
+const API_URL = "https://usrbg.is-hardly.online/users";
+
+async function fetchUserData() {
+    const res = await fetch(API_URL);
+    if (res.ok) {
+        const data = await res.json();
+        return data;
+    } else {
+        throw new Error("Failed to fetch user data");
+    }
+}
+
+function getImageUrl(data, userId) {
+    if (!data.users[userId]) return null;
+
+    const { endpoint, bucket, prefix, users: { [userId]: etag } } = data;
+    return `${endpoint}/${bucket}/${prefix}${userId}?${etag}`;
+}
+
+async function displayUserBanner() {
+    try {
+        const data = await fetchUserData();
+        const imageUrl = getImageUrl(data, userId);
+        if (imageUrl) {
+            document.getElementById("user-banner").src = imageUrl;
+        } else {
+            console.error("User does not have a background image");
+        }
+    } catch (error) {
+        console.error("Error fetching or displaying user banner:", error);
+    }
+}
+
+displayUserBanner();
