@@ -59,7 +59,6 @@ body {
 
 /* Profile Picture */
 #profilePicture {
-    background-image: url("images/channel.webp");
     background-size: cover;
     background-position: center;
     width: 150px;

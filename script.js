@@ -173,3 +173,35 @@ async function displayUserBanner() {
 }
 
 displayUserBanner();
+
+// --------------------------------------------
+// Get User Profile Picture of Discord
+// --------------------------------------------
+
+const API_URL2 = "https://discordlookup.mesalytic.moe/v1/user/";
+
+async function fetchUserAvatar() {
+    try {
+        const res = await fetch(API_URL2 + userId);
+        if (!res.ok) {
+            throw new Error("Failed to fetch user data");
+        }
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching user avatar:", error);
+    }
+}
+
+async function displayUserAvatar() {
+    try {
+        const data = await fetchUserAvatar();
+        const imageUrl = data.avatar.link;
+        const img = document.getElementById("profilePicture");
+        img.style.backgroundImage = `url(${imageUrl})`;
+    } catch (error) {
+        console.error("Error fetching or displaying user avatar:", error);
+    }
+}
+
+displayUserAvatar();
