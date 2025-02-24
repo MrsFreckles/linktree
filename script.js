@@ -51,7 +51,10 @@ async function fetchAndDisplayImage() {
         const img = document.createElement('img');
         img.src = imageUrl;
         img.alt = 'Fetched Image';
-        document.getElementById('profilePicture').appendChild(img);
+
+        if (imageId !== null){
+            document.getElementById('profilePicture').appendChild(img);
+        }
     } catch (error) {
         console.error('Fehler beim Abrufen der Daten:', error);
     }
