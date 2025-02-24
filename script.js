@@ -62,8 +62,6 @@ async function fetchAndDisplayImage() {
     }
 }
 
-fetchAndDisplayImage().then(r => console.log('Profilbild erfolgreich abgerufen.'));
-
 // --------------------------------------------
 // Discord-Mitgliederanzahl abrufen und anzeigen
 // --------------------------------------------
@@ -172,7 +170,7 @@ async function displayUserBanner() {
     }
 }
 
-displayUserBanner();
+displayUserBanner().then(() => console.log("User banner successfully fetched and displayed."));
 
 // --------------------------------------------
 // Get User Profile Picture of Discord
@@ -199,9 +197,20 @@ async function displayUserAvatar() {
         const imageUrl = data.avatar.link;
         const img = document.getElementById("profilePicture");
         img.style.backgroundImage = `url(${imageUrl})`;
+
+        if (data.avatar_decoration) {
+            const decoration = document.createElement("img");
+            //https://cdn.discordapp.com/avatar-decoration-presets/%asset%.png?size=160&passthrough=true
+            const asset = data.avatar_decoration.asset;
+            decoration.src = `https://cdn.discordapp.com/avatar-decoration-presets/${asset}.png?size=160&passthrough=true`;
+            decoration.alt = "Avatar Decoration";
+            img.appendChild(decoration);
+        }else {
+            fetchAndDisplayImage().then(r => console.log('Profilbild erfolgreich abgerufen.'));
+        }
     } catch (error) {
         console.error("Error fetching or displaying user avatar:", error);
     }
 }
 
-displayUserAvatar();
+displayUserAvatar().then(() => console.log("User avatar successfully fetched and displayed."));
