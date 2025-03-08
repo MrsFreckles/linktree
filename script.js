@@ -22,6 +22,11 @@ const links = [
         url: "https://www.tiktok.com/@freckles.mp4",
         image: "images/tiktok.webp",
     },
+    {
+        label: "Twitch",
+        url: "https://www.twitch.tv/frecklesmp4",
+        image: "images/twitch.webp",
+    },
 ]
 
 
