@@ -6,12 +6,12 @@ const links = [
         url: "https://app.mediafire.com/2thpqntfac3zx",
         image: "images/scenepacks.webp",
     },
-    {
-        label: "Discord",
-        url: "https://discord.gg/motorush",
-        image: "images/discord.webp",
-        optional_descriptionElement: "<p id='member-count'>... Members Online</p>",
-    },
+    //{
+    //    label: "Discord",
+    //    url: "https://discord.gg/motorush",
+    //    image: "images/discord.webp",
+    //    optional_descriptionElement: "<p id='member-count'>... Members Online</p>",
+    //},
     {
         label: "YouTube",
         url: "https://www.youtube.com/@freckles.mp4?sub_confirmation=1",
