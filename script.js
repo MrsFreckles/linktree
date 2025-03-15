@@ -2,16 +2,22 @@ const userId = "464424249877331969";
 
 const links = [
     {
+        label: "GitHub",
+        url: "https://github.com/MrsFreckles",
+        image: "images/github.webp",
+    },
+    {
+        label: "My Discord App",
+        url: "https://discord.com/oauth2/authorize?client_id=1322273247315759177",
+        image: "images/bot-banner.webp",
+        //optional_descriptionElement: "<p id='member-count'>... Members Online</p>", // wird für Discord-Mitgliederanzahl bei Servern verwendet
+    },
+    {
         label: "Scenepacks",
         url: "https://app.mediafire.com/2thpqntfac3zx",
         image: "images/scenepacks.webp",
     },
-    //{
-    //    label: "Discord",
-    //    url: "https://discord.gg/motorush",
-    //    image: "images/discord.webp",
-    //    optional_descriptionElement: "<p id='member-count'>... Members Online</p>",
-    //},
+
     {
         label: "YouTube",
         url: "https://www.youtube.com/@freckles.mp4?sub_confirmation=1",
