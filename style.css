@@ -207,6 +207,23 @@ h1 {
     transform: translate(-3px, -3px);
 }
 
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none; /* Ensures the iframe does not block interactions with elements below it */
+    display: none; /* Hide the iframe by default */
+}
+
+@media (min-width: 1200px) { /* Adjust the min-width value as needed */
+    #overlay {
+        display: block; /* Show the iframe when the viewport is wide enough */
+    }
+}
+
 
 
 
