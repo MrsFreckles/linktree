@@ -224,14 +224,16 @@ h1 {
     }
 }
 
+#toggle-chat {
+    position: fixed;
+    top: 1em;
+    right: 3em; /* Adjusted to place it next to the theme switch */
+    color: var(--text);
+    font-size: 1.25em;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
 
-
-
-
-
-
-
-
-
-
-
+#toggle-chat:hover {
+    transform: scale(1.1);
+}

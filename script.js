@@ -225,3 +225,17 @@ async function displayUserAvatar() {
 }
 
 displayUserAvatar().then(() => console.log("User avatar successfully fetched and displayed."));
+
+const toggleChat = document.getElementById('toggle-chat');
+const overlay = document.getElementById('overlay');
+
+// Initially hide the iframe
+overlay.style.display = 'none';
+
+toggleChat.addEventListener('click', () => {
+    if (overlay.style.display === 'none') {
+        overlay.style.display = 'block';
+    } else {
+        overlay.style.display = 'none';
+    }
+});
